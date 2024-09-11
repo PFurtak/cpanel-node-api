@@ -10,6 +10,7 @@ jobs:
         uses: actions/setup-node@v4
       - name: Install NPM Deps
         run: |
+          ls -all
           cd cpanel-node-api/
           npm install --also=dev
       - name: ESlint Check
