@@ -12,7 +12,7 @@ jobs:
             node-version: 16.20.2
       - name: Install NPM Packages
         run: npm install --also=dev
-      - name: ESlint
+      - name: Run ESlint
         run: npm run lint
-      - name: Unit Tests
+      - name: Run Unit Tests
         run: npm run test
