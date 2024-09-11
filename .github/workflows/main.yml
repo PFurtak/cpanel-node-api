@@ -1,0 +1,22 @@
+name: Pre PR Checks
+on: push
+jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Src
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+      - name: Install NPM Deps
+        run: |
+          cd cpanel-node-api/
+          npm install --also=dev
+      - name: ESlint Check
+        run: |
+          cd cpanel-node-api/
+          npm run lint
+      - name: Unit Tests
+        run: |
+          cd cpanel-node-api/
+          npm run test
