@@ -9,15 +9,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
       - name: Install NPM Deps
-        run: |
-          ls -all
-          cd cpanel-node-api/
-          npm install --also=dev
+        run: npm install --also=dev
       - name: ESlint Check
-        run: |
-          cd cpanel-node-api/
-          npm run lint
+        run: npm run lint
       - name: Unit Tests
-        run: |
-          cd cpanel-node-api/
-          npm run test
+        run: npm run test
