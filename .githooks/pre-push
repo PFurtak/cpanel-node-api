@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Pre-push hook initialized..."
+echo "Running 'prettier --check' against committed changes..."
+
 # Check if Prettier is available via npx
 if ! npx --no-install prettier --help > /dev/null 2>&1; then
   echo "Prettier is not installed. Please install it to use this hook."
@@ -27,22 +30,23 @@ fi
 npx prettier --check $committed_files
 prettier_status=$?
 
-# If Prettier found issues (exit code is non-zero), prompt the user
-if [ $prettier_status -ne 0 ]; then
-  echo "Prettier has detected formatting issues."
-  echo "Would you like to proceed with the push? (y/n)"
-  
-  # Read user input and store the result
-  read -p "(y/n)?: " proceed
+# This ensures that echo output is shown before the prompt
+echo "Prettier has detected formatting issues."
+echo "Would you like to proceed with the push? (y/n)"
+read -p "(y/n)?: " proceed < /dev/tty
 
-  if [[ "$proceed" != "y" ]]; then
-    echo "Push aborted. Please format your code and try again."
-    exit 1
-  else
-    echo "Proceeding with the push despite formatting issues."
-  fi
+# Fix: Use while loop to ensure valid input is captured
+while [[ "$proceed" != "y" && "$proceed" != "n" ]]; do
+  echo "Invalid input, please enter 'y' or 'n'."
+  read -p "(y/n)?: " proceed < /dev/tty
+done
+
+# If Prettier found issues and user chooses 'n', abort the push
+if [[ "$proceed" != "y" ]]; then
+  echo "Push aborted. Please format your code and try again: npx tidy"
+  exit 1
 else
-  echo "All files are formatted correctly."
+  echo "Proceeding with the push despite formatting issues."
 fi
 
 # If everything is fine or user allows, continue with the push
