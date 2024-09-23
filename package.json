@@ -104,7 +104,7 @@
         "jasmine-ts": "0.3.2",
         "nyc": "15.1.0",
         "onchange": "7.1.0",
-        "prettier": "^2.7.1",
+        "prettier": "^2.8.8",
         "ts-node": "9.1.1",
         "tslib": "2.4.0",
         "typescript": "4.6.4",

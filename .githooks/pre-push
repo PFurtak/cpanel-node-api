@@ -13,21 +13,26 @@ git stash -q --keep-index
 npx prettier --check "**/*.{js,ts,json,css,html,md}"
 prettier_status=$?
 
-# Apply stashed changes back
+# Apply stashed changes back quietly
 git stash pop -q
 
 # If Prettier found issues (exit code is non-zero), prompt the user
 if [ $prettier_status -ne 0 ]; then
-  echo "Prettier has detected formatting issues. Would you like to proceed with the push? (y/n)"
-  read -r proceed
+  echo "Prettier has detected formatting issues."
+  echo "Would you like to proceed with the push? (y/n)"
+  
+  # Read user input and store the result
+  read -p "Enter your choice: " proceed
 
   if [[ "$proceed" != "y" ]]; then
-    echo "Push aborted. Please format your code and try again: npx tidy"
+    echo "Push aborted. Please format your code and try again."
     exit 1
+  else
+    echo "Proceeding with the push despite formatting issues."
   fi
 else
   echo "All files are formatted correctly."
 fi
 
-# If the user confirms, allow the push to proceed
+# If everything is fine or user allows, continue with the push
 exit 0
