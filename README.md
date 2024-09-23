@@ -102,6 +102,22 @@ fetch('http://my-cpanel-server.com:2087', {
   .then(data => console.log(data));
 ```
 
+## Prerequisites
+
+1. Clone the project
+
+```sh
+git clone <repository-url>
+cd <repository-directory>
+```
+
+2. Setup pre-push Hooks (optional) (recommended)
+   This project utilizes Github Actions to enforce coding standards during pull-requests to main. If you would like to run these checks locally, we have provided pre-push githook scripts which you can access locally by running the following command:
+
+```sh
+git config core.hooksPath .githooks
+```
+
 ## Development
 
 1. Set up your development environment to test the local version of your library rather than the one distributed on `npm.dev.cpanel.net`:
@@ -189,6 +205,7 @@ When your changes are implemented and tested, and you're ready to publish, run:
 -   Philip King <phil@cpanel.net>
 -   Caitlin Flattery <c.flattery@cpanel.net>
 -   Aspen Hollyer <a.hollyer@cpanel.net>
+-   Patrick Furtak <patrick.furtak@webpros.com>
 
 ## License
 

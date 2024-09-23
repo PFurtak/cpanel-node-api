@@ -20,10 +20,6 @@
         "**/*.map.js",
         "documentation/**/*"
     ],
-    "lint-staged": {
-        "*.ts": "npx eslint",
-        "**/*": "prettier --write --ignore-unknown"
-    },
     "scripts": {
         "build:prod": "npm run clean && npm run build:ts && npm run webpack:prod",
         "build:dev": "npm run clean && npm run build:ts-dev && npm run webpack:dev",
@@ -38,7 +34,6 @@
         "test": "npm run build:dev && jasmine --config=jasmine.json --reporter=jasmine-console-reporter",
         "test:cover": "npm run build:dev && nyc -r lcov -x '**/*.spec.ts' jasmine --config=jasmine.json && nyc report",
         "test:watch": "npm run build:test-watch && onchange -i -v -d 100 dist -- jasmine --config=jasmine.json --reporter=jasmine-console-reporter",
-        "prepare": "husky install",
         "prepublish": "npm run build:prod",
         "lint": "npx eslint 'src/**/*.ts'",
         "lint:fix": "npx eslint 'src/**/*.ts' --fix",
@@ -104,11 +99,9 @@
         "eslint": "7.23.0",
         "eslint-config-prettier": "8.5.0",
         "http-server": "0.12.3",
-        "husky": "8.0.1",
         "jasmine": "3.7.0",
         "jasmine-console-reporter": "3.1.0",
         "jasmine-ts": "0.3.2",
-        "lint-staged": "13.0.3",
         "nyc": "15.1.0",
         "onchange": "7.1.0",
         "prettier": "2.7.1",
