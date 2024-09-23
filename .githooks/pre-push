@@ -20,7 +20,7 @@ if [[ $unformatted_files == *"code style issues found"* ]]; then
   read -r proceed
 
   if [[ "$proceed" != "y" ]]; then
-    echo "Push aborted. Please format your code and try again."
+    echo "Push aborted. Please format your code and try again: npx tidy"
     exit 1
   fi
 else

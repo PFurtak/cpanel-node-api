@@ -73,11 +73,18 @@ export class Argument implements IArgument {
  */
 export class PerlBooleanArgument extends Argument {
     /**
-     * Build a new Argument
-     * @param  name  Name of the argument
-     * @param value Value of the argument. Will be serialized to use perl's Boolean rules.
+     * Build
+     *
+     * a new Argument
+     * @param  name         Name of the argument
+     * @param value Value of 
+     * the
+     *  argument. Will be seri
+     * alized to use perl's Boolean rules.
      */
-    constructor(name: string, value: boolean) {
-        super(name, fromBoolean(value));
+    constructor(name: string,
+         value: boolean) {
+        super(name,
+                 fromBoolean(value));
     }
 }
