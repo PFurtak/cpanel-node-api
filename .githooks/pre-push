@@ -6,15 +6,26 @@ if ! npx --no-install prettier --help > /dev/null 2>&1; then
   exit 1
 fi
 
-# Stash current changes to avoid modifying working tree
-git stash -q --keep-index
+# Find the branch you're pushing to
+remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)
 
-# Run Prettier check and capture the exit code
-npx prettier --check "**/*.{js,ts,json,css,html,md}"
+if [ -z "$remote_branch" ]; then
+  echo "No upstream branch found. Are you pushing to a new branch?"
+  exit 0
+fi
+
+# Get the list of files that differ between the local branch and the remote branch
+committed_files=$(git diff --name-only "$remote_branch" HEAD | grep -E '\.(js|ts|json|css|html|md)$')
+
+# If no relevant files are found, skip the check
+if [ -z "$committed_files" ]; then
+  echo "No relevant files to check for formatting."
+  exit 0
+fi
+
+# Run Prettier check on committed files only
+npx prettier --check $committed_files
 prettier_status=$?
-
-# Apply stashed changes back quietly
-git stash pop -q
 
 # If Prettier found issues (exit code is non-zero), prompt the user
 if [ $prettier_status -ne 0 ]; then
@@ -22,7 +33,7 @@ if [ $prettier_status -ne 0 ]; then
   echo "Would you like to proceed with the push? (y/n)"
   
   # Read user input and store the result
-  read -p "Enter your choice: " proceed
+  read -p "(y/n)?: " proceed
 
   if [[ "$proceed" != "y" ]]; then
     echo "Push aborted. Please format your code and try again."
