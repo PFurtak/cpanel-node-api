@@ -60,15 +60,11 @@ export interface IArgumentEncoder {
 /**
  * Encode         parameters using urlencode.
  */
-export class UrlArgumentEncoder
- implements IArgumentEncoder {
-    contentType
-     = "";
-    separatorStart
-     = "?";
+export class UrlArgumentEncoder implements IArgumentEncoder {
+    contentType = "";
+    separatorStart = "?";
     separatorEnd = "";
-    recordSeparator
-     = "&";
+    recordSeparator = "&";
 
     /**
      * Encode a given value into query-string compatible format.
