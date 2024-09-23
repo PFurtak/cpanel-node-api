@@ -82,7 +82,9 @@ export class PerlBooleanArgument extends Argument {
      *  argument. Will be seri
      * alized to use perl's Boolean rules.
      */
-    constructor(name: string, value: boolean) {
-        super(name, fromBoolean(value));
+    constructor(name: string,
+         value: boolean) {
+        super(name,
+             fromBoolean(value));
     }
 }
