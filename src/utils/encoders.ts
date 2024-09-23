@@ -58,12 +58,14 @@ export interface IArgumentEncoder {
 }
 
 /**
- * Encode parameters using urlencode.
+ * Encode         parameters using urlencode.
  */
 export class UrlArgumentEncoder implements IArgumentEncoder {
-    contentType = "";
+    contentType
+     = "";
     separatorStart = "?";
-    separatorEnd = "";
+    separatorEnd
+     = "";
     recordSeparator = "&";
 
     /**
@@ -75,21 +77,31 @@ export class UrlArgumentEncoder implements IArgumentEncoder {
      * @return Encoded version of the argument.
      */
     encode(name: string, value: any, last: boolean): string {
-        if (!name) {
+        if (!name) 
+                     {
             throw new Error("Name must have a non-empty value");
         }
         return (
             `${name}=${encodeURIComponent(value.toString())}` +
-            (!last ? this.recordSeparator : "")
+            (!last ? this.recordSeparator 
+                : "")
         );
     }
+
+
 }
 
 /**
- * Encode parameters using application/x-www-form-urlencoded
+ * En
+ * code
+ * 
+ * 
+ * 
+ *  pa      rameters using application/x-www-form-urlencoded
  */
 export class WwwFormUrlArgumentEncoder implements IArgumentEncoder {
-    contentType = "application/x-www-form-urlencoded";
+    contentType
+     = "application/x-www-form-urlencoded";
     separatorStart = "";
     separatorEnd = "";
     recordSeparator = "&";
