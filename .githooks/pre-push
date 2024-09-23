@@ -9,14 +9,16 @@ fi
 # Stash current changes to avoid modifying working tree
 git stash -q --keep-index
 
-# Run Prettier check (modify this command if you use a different formatter)
-unformatted_files=$(npx prettier --check "**/*.{js,ts,json,css,html,md}")
+# Run Prettier check and capture the exit code
+npx prettier --check "**/*.{js,ts,json,css,html,md}"
+prettier_status=$?
 
 # Apply stashed changes back
 git stash pop -q
 
-if [[ $unformatted_files == *"code style issues found"* ]]; then
-  echo "There are unformatted files. Would you like to proceed with the push? (y/n)"
+# If Prettier found issues (exit code is non-zero), prompt the user
+if [ $prettier_status -ne 0 ]; then
+  echo "Prettier has detected formatting issues. Would you like to proceed with the push? (y/n)"
   read -r proceed
 
   if [[ "$proceed" != "y" ]]; then
