@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Check if the project has Prettier or another formatter installed
+if ! [ -x "$(command -v prettier)" ]; then
+  echo "Prettier is not installed. Please install it to use this hook."
+  exit 1
+fi
+
+# Stash current changes to avoid modifying working tree
+git stash -q --keep-index
+
+# Run Prettier check (modify this command if you use a different formatter)
+unformatted_files=$(prettier --check "**/*.{js,ts,json,css,html,md}")
+
+# Apply stashed changes back
+git stash pop -q
+
+if [[ $unformatted_files == *"code style issues found"* ]]; then
+  echo "There are unformatted files. Would you like to proceed with the push? (y/n)"
+  read -r proceed
+
+  if [[ "$proceed" != "y" ]]; then
+    echo "Push aborted. Please format your code and try again."
+    exit 1
+  fi
+else
+  echo "All files are formatted correctly."
+fi
+
+# If the user confirms, allow the push to proceed
+exit 0
