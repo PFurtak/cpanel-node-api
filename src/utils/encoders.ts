@@ -54,7 +54,10 @@ export interface IArgumentEncoder {
      * @param last True if this is the last argument being serialized.
      * @return Encoded version of the argument.
      */
-    encode(name: string, value: any, last: boolean): string;
+    encode(name: string,
+         value: any,
+          last: boolean)
+          : string;
 }
 
 /**

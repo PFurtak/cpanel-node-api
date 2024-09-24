@@ -39,6 +39,12 @@ if [ $prettier_status -ne 0 ]; then
   # Read user input and store the result
   read -p "(y/n)?: " proceed < /dev/tty
 
+   # While loop to ensure valid input (only y or n)
+  while [[ "$proceed" != "y" && "$proceed" != "n" ]]; do
+    echo "Invalid input, please enter 'y' or 'n'."
+    read -p "(y/n)?: " proceed < /dev/tty
+  done
+
   # If the user says no, abort the push
   if [[ "$proceed" != "y" ]]; then
     echo "Push aborted. Please format your code and try again."
@@ -48,6 +54,7 @@ if [ $prettier_status -ne 0 ]; then
   fi
 else
   echo "All files are formatted correctly."
+  echo "Pushing changes..."
 fi
 
 # If everything is fine or user allows, continue with the push
