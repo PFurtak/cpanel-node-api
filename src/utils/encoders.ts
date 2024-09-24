@@ -123,10 +123,14 @@ export class WwwFormUrlArgumentEncoder implements IArgumentEncoder {
  * Encode the parameter into JSON
  */
 export class JsonArgumentEncoder implements IArgumentEncoder {
-    contentType = "application/json";
-    separatorStart = "{";
-    separatorEnd = "}";
-    recordSeparator = ",";
+    contentType
+     = "application/json";
+    separatorStart
+     = "{";
+    separatorEnd
+     = "}";
+    recordSeparator
+     = ",";
 
     /**
      * Encode a given value into the JSON application/json body.
