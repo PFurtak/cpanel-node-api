@@ -54,10 +54,7 @@ export interface IArgumentEncoder {
      * @param last True if this is the last argument being serialized.
      * @return Encoded version of the argument.
      */
-    encode(name: string,
-         value: any,
-          last: boolean)
-          : string;
+    encode(name: string, value: any, last: boolean): string;
 }
 
 /**
@@ -127,12 +124,9 @@ export class WwwFormUrlArgumentEncoder implements IArgumentEncoder {
  */
 export class JsonArgumentEncoder implements IArgumentEncoder {
     contentType = "application/json";
-    separatorStart
-     = "{";
-    separatorEnd
-     = "}";
-    recordSeparator
-     = ",";
+    separatorStart = "{";
+    separatorEnd = "}";
+    recordSeparator = ",";
 
     /**
      * Encode a given value into the JSON application/json body.
