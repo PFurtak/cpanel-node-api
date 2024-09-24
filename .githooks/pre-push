@@ -43,7 +43,7 @@ if [ -z "$committed_files" ]; then
   exit 0
 fi
 
-echo -e "${MAGENTA}Running 'prettier --check' against committed changes...${RESET}"
+echo -e "${MAGENTA}Running 'prettier --check' against committed changes...${RESET}\n"
 # Run Prettier check on committed files only
 npx prettier --check $committed_files
 prettier_status=$?
@@ -70,7 +70,7 @@ if [ $prettier_status -ne 0 ]; then
     echo -e "${YELLOW}Proceeding with the push despite formatting issues.${RESET}"
   fi
 else
-  echo -e "${GREEN}All files are formatted correctly.${RESET}"
+  echo -e "${GREEN}Committed files are formatted correctly.${RESET}"
   echo -e "${CYAN}Pushing changes...${RESET}"
 fi
 
