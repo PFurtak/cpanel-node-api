@@ -2,21 +2,26 @@
 
 echo "Pre-push hook initialized..."
 
+echo "Checking for prettier installation..."
+
 # Check if Prettier is available via npx
 if ! npx --no-install prettier --help > /dev/null 2>&1; then
   echo "Prettier is not installed. Please install it to use this hook."
   exit 1
 fi
 
+echo "Checking against remote for changed files..."
+
 # Find the branch you're pushing to
 remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)
 
 if [ -z "$remote_branch" ]; then
-  echo "No upstream branch found. Are you pushing to a new branch?"
+  echo "No upstream branch found. Is this a new branch?"
+  echo "Pushing changes..."
   exit 0
 fi
 
-echo "Running 'prettier --check' against committed changes..."
+echo "Checking for committed files..."
 
 # Get the list of files that differ between the local branch and the remote branch
 committed_files=$(git diff --name-only "$remote_branch" HEAD | grep -E '\.(js|ts|json|css|html|md)$')
@@ -27,11 +32,12 @@ if [ -z "$committed_files" ]; then
   exit 0
 fi
 
+echo "Running 'prettier --check' against committed changes..."
 # Run Prettier check on committed files only
 npx prettier --check $committed_files
 prettier_status=$?
 
-# If Prettier found issues (exit code is non-zero), prompt the user
+# If Prettier found issues, prompt the user
 if [ $prettier_status -ne 0 ]; then
   echo "Prettier has detected formatting issues."
   echo "Would you like to proceed with the push? (y/n)"
@@ -39,7 +45,7 @@ if [ $prettier_status -ne 0 ]; then
   # Read user input and store the result
   read -p "(y/n)?: " proceed < /dev/tty
 
-   # While loop to ensure valid input (only y or n)
+   # While loop to ensure valid input
   while [[ "$proceed" != "y" && "$proceed" != "n" ]]; do
     echo "Invalid input, please enter 'y' or 'n'."
     read -p "(y/n)?: " proceed < /dev/tty

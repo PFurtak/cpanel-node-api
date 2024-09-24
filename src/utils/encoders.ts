@@ -127,9 +127,12 @@ export class WwwFormUrlArgumentEncoder implements IArgumentEncoder {
  */
 export class JsonArgumentEncoder implements IArgumentEncoder {
     contentType = "application/json";
-    separatorStart = "{";
-    separatorEnd = "}";
-    recordSeparator = ",";
+    separatorStart
+     = "{";
+    separatorEnd
+     = "}";
+    recordSeparator
+     = ",";
 
     /**
      * Encode a given value into the JSON application/json body.
